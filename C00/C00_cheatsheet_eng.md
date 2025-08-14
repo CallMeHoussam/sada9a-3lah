@@ -53,6 +53,16 @@ ssize_t write(int fd, const void *buf, size_t count);
 
 * Print spaces, `\n`, symbols, and non-ASCII chars.
 
+**Keywords & Concepts:**
+
+* **File Descriptor** (`fd`)
+* **Standard Output** (`stdout`)
+* **System Call** (vs library call)
+* **Buffer**
+* **Address-of Operator** (`&`)
+* **ssize\_t**
+* **Return Value** of `write`
+* **Partial Write**
 ---
 
 ## **ex01 — ft\_print\_alphabet**
@@ -70,6 +80,16 @@ ssize_t write(int fd, const void *buf, size_t count);
 * Can you do it without a loop (recursion)? What’s the base case?
 * How portable is relying on ASCII order?
 
+**Keywords & Concepts:**
+
+* **ASCII Table**
+* **Character Encoding**
+* **Loop (Iteration)**
+* **Recursion** (alternative approach)
+* **Lexicographic Order**
+* **Portability** (assumption that ASCII order is valid)
+* **Locale** (why we stick to C locale in 42)
+
 ---
 
 ## **ex03 — ft\_print\_numbers**
@@ -83,6 +103,13 @@ ssize_t write(int fd, const void *buf, size_t count);
 
 * Why does `'0' + 3` give `'3'`?
 * Difference between printing 10 as a number vs two separate characters `'1'` and `'0'`.
+**Keywords & Concepts:**
+
+* **ASCII Arithmetic** (`'0' + i`)
+* **Character Literal** vs **Integer Literal**
+* **Type Casting**
+* **Contiguous Character Codes**
+* **Off-by-One Error** (loop boundaries)
 
 ---
 
@@ -97,6 +124,15 @@ ssize_t write(int fd, const void *buf, size_t count);
 
 * What are the limits of `int`? (`INT_MIN` and `INT_MAX`)
 * Difference between `< 0` and `<= 0`.
+
+**Keywords & Concepts:**
+
+* **Conditional Statement** (`if/else`)
+* **Comparison Operators** (`<`, `>=`)
+* **Signed Integer**
+* **Sign Bit**
+* **Integer Range** (`INT_MIN`, `INT_MAX`)
+* **Zero as Positive** (problem-specific rule)
 
 ---
 
@@ -117,6 +153,16 @@ ssize_t write(int fd, const void *buf, size_t count);
 
 * Check first: `012, 013, ...`
 * Check last: `789` (no comma).
+
+**Keywords & Concepts:**
+
+* **Combination** (vs permutation)
+* **Nested Loops**
+* **Strictly Increasing Sequence**
+* **Lexicographic Order**
+* **Formatting** (separator rules)
+* **Trailing Separator Problem**
+* **Combinatorics Formula** (C(n, k) = n! / (k!(n-k)!))
 
 ---
 
@@ -139,6 +185,16 @@ ssize_t write(int fd, const void *buf, size_t count);
 * First: `00 01`
 * Last: `98 99` (no comma).
 
+**Keywords & Concepts:**
+
+* **Leading Zero**
+* **Two-Digit Formatting**
+* **Pair Comparison** (`ab < cd`)
+* **Nested Loops with Ranges**
+* **Formatting Rules**
+* **String Representation** of numbers
+* **Edge Case** (last pair without separator)
+
 ---
 
 ## **ex07 — ft\_putnbr**
@@ -158,6 +214,17 @@ ssize_t write(int fd, const void *buf, size_t count);
 **Tests:**
 
 * `0`, positive, negative, `INT_MIN`, `INT_MAX`.
+
+**Keywords & Concepts:**
+
+* **Integer to Character Conversion**
+* **Division and Modulo**
+* **Recursion** (digit printing)
+* **Negative Number Handling**
+* **Two’s Complement** (why `-INT_MIN` overflows)
+* **Integer Overflow**
+* **Base Case** (in recursion)
+* **Type Casting to Long**
 
 ---
 
@@ -180,6 +247,17 @@ ssize_t write(int fd, const void *buf, size_t count);
 * n=1 → `0..9`
 * n=2 → `01, 02, ..., 89`
 * n=9 → `012345678, ..., 123456789` (no comma at end)
+
+**Keywords & Concepts:**
+
+* **Generalized Combination**
+* **Array Representation**
+* **Carry Propagation** (increment logic)
+* **Strictly Increasing Digits**
+* **Stopping Condition**
+* **Combinatorics** (C(10, n))
+* **Lexicographic Generation**
+* **Algorithm Complexity**
 
 ---
 
@@ -207,8 +285,3 @@ diff -u expected.txt <(./a.out)
 # comb2: "00 01", ..., "98 99"
 # combn: n=1, n=2, n=9
 ```
-
----
-
-If you want, I can now **generate a printable PDF version** of this cheat sheet so you can keep it next to you during the Piscine.
-Do you want me to prepare that?

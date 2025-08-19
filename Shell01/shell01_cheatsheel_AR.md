@@ -1,5 +1,5 @@
 
-# 42 Piscine — Shell 01 (Darija + Technical Terms)
+# 42 Piscine — Shell 01
 ---
 ## ex01 — print_groups
 **خاصك تعرف:**

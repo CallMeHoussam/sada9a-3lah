@@ -1,4 +1,4 @@
-# 42 Piscine — C 03 (Deep Preparation Guide + Algorithms)
+# 42 Piscine — C 03 (Deep Preparation Guide)
 
 This module trains you to reimplement **comparison, concatenation, and substring functions**.  
 Evaluators will test **edge cases, memory handling, ASCII logic, and pointer arithmetic**.  

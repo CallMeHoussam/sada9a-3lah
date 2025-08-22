@@ -1,214 +1,297 @@
 # 42 Piscine — C01 Full Preparation Guide
 
-This guide contains everything you need to prepare for C01 exercises at 42:
-- **You must know:** core concepts and required understanding.
-- **Defense questions:** what peers/Moulinette-style evaluators might ask.
-- **Tests:** how to verify your work and edge cases to check.
-- **Keywords & Concepts:** technical vocabulary to know for defense.
-- Extra tips for passing Norminette and avoiding pitfalls.
+### **Ex00 – ft\_ft**
+
+**Goal:** Write a function that takes a pointer to int and sets it to `42`.
+
+* ❓ **Defense Questions**
+
+  * What is a pointer?
+  * What is the difference between `*nbr` and `nbr`?
+  * Why `42`? (42 school joke).
+
+* 🧠 **Algorithm**
+
+  * Take `int *nbr`.
+  * Dereference it: `*nbr = 42`.
+
+* 🔑 **Keywords & Concepts**
+
+  * Pointer basics.
+  * Dereferencing.
+
+* 📌 **You must know**
+
+  * Memory vs. value.
+
+* 🧪 **Tests**
+
+  ```c
+  int a;
+  ft_ft(&a);
+  printf("%d", a); // 42
+  ```
 
 ---
 
-## General Rules
-- Submit only the required files, in the exact directory and filename.
-- Allowed functions: mostly none (only `write` in `ft_putstr`).
-- Compile with: `gcc -Wall -Wextra -Werror` — treat warnings as errors.
-- Output must match exactly (spaces, commas, no extra newline unless required).
-- Check hidden characters: `./a.out | cat -e`
-- Run Norminette: `norminette -R CheckForbiddenSourceHeader`
-- No extra files in your repo. No `main()` unless required.
-- Forbidden functions = -42.
+### **Ex01 – ft\_ultimate\_ft**
+
+**Goal:** Set `42` using 9 levels of pointers.
+
+* ❓ **Defense Questions**
+
+  * What is `*********nbr`?
+  * How many levels of indirection are possible in C?
+  * What’s the purpose of this exercise? (Understand deep pointers).
+
+* 🧠 **Algorithm**
+
+  * Dereference 9 times: `*********nbr = 42`.
+
+* 🔑 **Keywords & Concepts**
+
+  * Multi-level pointers.
+  * Pointer to pointer.
+
+* 📌 **You must know**
+
+  * In memory, each level points to another address.
+
+* 🧪 **Tests**
+
+  ```c
+  int a;
+  int *p1 = &a; int **p2 = &p1; ... int *********p9 = &p8;
+  ft_ultimate_ft(p9);
+  printf("%d", a); // 42
+  ```
 
 ---
 
-## ex00 — ft_ft
+### **Ex02 – ft\_swap**
 
-**You must know:**
-- Passing a pointer to a function.
-- Using `*` to modify the value at the pointed location.
-- `int *nbr` points to an `int`.
+**Goal:** Swap two integers.
 
-**Defense questions:**
-- What is a pointer?
-- Difference between `*nbr = 42;` and `nbr = 42;`?
-- What happens if you pass NULL?
+* ❓ **Defense Questions**
 
-**Tests:**
-- Pass an int variable to `ft_ft` and check value changes to 42.
+  * Why use a temporary variable?
+  * Can you swap without a temp variable?
 
-**Keywords & Concepts:**
-- Pointer
-- Dereferencing
-- Indirection Operator (`*`)
-- NULL pointer
+* 🧠 **Algorithm**
 
----
+  * Store `*a` in temp.
+  * Assign `*a = *b`.
+  * Assign `*b = temp`.
 
-## ex01 — ft_ultimate_ft
+* 🔑 **Keywords & Concepts**
 
-**You must know:**
-- Pointer to pointer… 9 levels deep.
-- Following the chain to modify the original int.
+  * Passing by address.
+  * Swapping techniques.
 
-**Defense questions:**
-- What is `int *********nbr`?
-- Stack memory vs heap memory.
-- Is there a practical reason for multiple indirections?
+* 📌 **You must know**
 
-**Tests:**
-- Chain 9 pointers to one int, call function, verify value is 42.
+  * Difference between swap with temp vs. arithmetic swap.
 
-**Keywords & Concepts:**
-- Multiple Indirection
-- Dereferencing Levels
-- Memory Address Chaining
+* 🧪 **Tests**
+
+  ```c
+  int x=5, y=10;
+  ft_swap(&x, &y);
+  // x=10, y=5
+  ```
 
 ---
 
-## ex02 — ft_swap
+### **Ex03 – ft\_div\_mod**
 
-**You must know:**
-- Swapping values using a temporary variable.
-- Passing by address to modify both ints.
+**Goal:** Store division and modulo of `a / b`.
 
-**Defense questions:**
-- Difference between swapping addresses vs values.
-- Why a temp variable is needed.
+* ❓ **Defense Questions**
 
-**Tests:**
-- Swap positive numbers, negative numbers, same values.
+  * What happens if `b=0`?
+  * What is the difference between `/` and `%` in C?
 
-**Keywords & Concepts:**
-- Swap Algorithm
-- Temporary Storage
-- Passing by Reference
+* 🧠 **Algorithm**
 
----
+  * `*div = a / b;`
+  * `*mod = a % b;`
 
-## ex03 — ft_div_mod
+* 🔑 **Keywords & Concepts**
 
-**You must know:**
-- Integer division and modulo.
-- Storing results in pointers.
-- Behavior with negative numbers.
+  * Integer division.
+  * Remainder operator.
 
-**Defense questions:**
-- Behavior of `/` and `%` with negatives in C.
-- What happens if b = 0? (undefined behavior)
+* 📌 **You must know**
 
-**Tests:**
-- Positive/negative combinations, divisor = 1, divisor = -1.
+  * Division by zero is undefined.
 
-**Keywords & Concepts:**
-- Division Operator `/`
-- Modulo Operator `%`
-- Undefined Behavior (divide by zero)
+* 🧪 **Tests**
+
+  ```c
+  int d, m;
+  ft_div_mod(10, 3, &d, &m);
+  // d=3, m=1
+  ```
 
 ---
 
-## ex04 — ft_ultimate_div_mod
+### **Ex04 – ft\_ultimate\_div\_mod**
 
-**You must know:**
-- Similar to ex03 but modifies original variables directly.
-- Store quotient in *a and remainder in *b.
+**Goal:** Modify values directly (`a = a/b`, `b = a%b`).
 
-**Defense questions:**
-- Difference between returning via pointer vs modifying in place.
-- Risks of overwriting original values too early (order of operations).
+* ❓ **Defense Questions**
 
-**Tests:**
-- Test with same cases as ex03.
+  * Why do we use pointers instead of return?
+  * What’s the difference with Ex03?
 
-**Keywords & Concepts:**
-- In-Place Modification
-- Data Overwrite Risk
-- Order of Operations
+* 🧠 **Algorithm**
 
----
+  * Save temp = \*a.
+  * `*a = temp / *b;`
+  * `*b = temp % *b;`
 
-## ex05 — ft_putstr
+* 🔑 **Keywords & Concepts**
 
-**You must know:**
-- Printing a null-terminated string with `write`.
-- Looping through each char until `\0`.
+  * In-place modification.
 
-**Defense questions:**
-- Difference between array of char and pointer to char.
-- What is `\0`? Why is it needed?
-- How does `write` know when to stop?
+* 📌 **You must know**
 
-**Tests:**
-- Empty string, normal text, special characters.
+  * Pointers allow direct modification.
 
-**Keywords & Concepts:**
-- Null-Terminator (`\0`)
-- String Representation in C
-- Standard Output
+* 🧪 **Tests**
+
+  ```c
+  int a=10, b=3;
+  ft_ultimate_div_mod(&a, &b);
+  // a=3, b=1
+  ```
 
 ---
 
-## ex06 — ft_strlen
+### **Ex05 – ft\_putstr**
 
-**You must know:**
-- Counting chars until `\0`.
-- No `strlen()` from `<string.h>`.
+**Goal:** Print a string with `write`.
 
-**Defense questions:**
-- Why is `\0` important in strings?
-- Time complexity of `strlen`.
+* ❓ **Defense Questions**
 
-**Tests:**
-- Empty string, long string, string with spaces.
+  * What is a string in C?
+  * How does `write` know where a string ends?
+  * Why `'\0'` is important?
 
-**Keywords & Concepts:**
-- String Traversal
-- Time Complexity O(n)
+* 🧠 **Algorithm**
 
----
+  * While `str[i] != '\0'`, print char by char.
 
-## ex07 — ft_rev_int_tab
+* 🔑 **Keywords & Concepts**
 
-**You must know:**
-- Reversing an array in place.
-- Swapping elements symmetrically.
+  * Strings in C = array of chars ending with `'\0'`.
 
-**Defense questions:**
-- Indexing arrays and pointer arithmetic.
-- How many swaps are needed? (`size/2`)
+* 📌 **You must know**
 
-**Tests:**
-- Even/odd length arrays, size = 1.
+  * No `printf`, only `write`.
 
-**Keywords & Concepts:**
-- In-Place Array Reversal
-- Symmetric Swap
-- Index Calculation
+* 🧪 **Tests**
+
+  ```c
+  ft_putstr("Hello 1337!");
+  // Hello 1337!
+  ```
 
 ---
 
-## ex08 — ft_sort_int_tab
+### **Ex06 – ft\_strlen**
 
-**You must know:**
-- Sorting array ascending.
-- Simple algorithms (bubble sort acceptable here).
-- Swapping until sorted.
+**Goal:** Count string length.
 
-**Defense questions:**
-- Time complexity of your sorting algorithm.
-- How to detect if array is already sorted.
+* ❓ **Defense Questions**
 
-**Tests:**
-- Already sorted, reverse sorted, duplicates, all equal.
+  * How does strlen work internally?
+  * Why stop at `'\0'`?
 
-**Keywords & Concepts:**
-- Bubble Sort (or similar)
-- Time Complexity O(n²)
-- Stable vs Unstable Sort
+* 🧠 **Algorithm**
+
+  * Initialize counter=0.
+  * While `str[i] != '\0'`, increment counter.
+  * Return counter.
+
+* 🔑 **Keywords & Concepts**
+
+  * Null-terminated strings.
+
+* 📌 **You must know**
+
+  * Difference between allocated size and strlen.
+
+* 🧪 **Tests**
+
+  ```c
+  printf("%d", ft_strlen("42")); // 2
+  ```
 
 ---
 
-## Extra Tips
-- Always test with edge cases (NULL pointers if applicable, empty strings, arrays of size 0/1).
-- Remember integer division truncates toward zero in C.
-- `write` doesn’t append `\0` or newline — you control output formatting.
-- In pointer exercises, be ready to draw memory diagrams during defense.
+### **Ex07 – ft\_rev\_int\_tab**
+
+**Goal:** Reverse an array of integers.
+
+* ❓ **Defense Questions**
+
+  * How to swap first and last?
+  * What is the complexity of this algorithm?
+
+* 🧠 **Algorithm**
+
+  * For i=0 → size/2: swap tab\[i] and tab\[size-1-i].
+
+* 🔑 **Keywords & Concepts**
+
+  * Arrays and indexes.
+  * Symmetry in reversal.
+
+* 📌 **You must know**
+
+  * Complexity = O(n/2).
+
+* 🧪 **Tests**
+
+  ```c
+  int arr[5]={1,2,3,4,5};
+  ft_rev_int_tab(arr,5);
+  // arr = 5,4,3,2,1
+  ```
+
+---
+
+### **Ex08 – ft\_sort\_int\_tab**
+
+**Goal:** Sort an int array ascending.
+
+* ❓ **Defense Questions**
+
+  * What sorting algorithms do you know?
+  * What’s the complexity of Bubble sort?
+
+* 🧠 **Algorithm** (bubble sort style)
+
+  * For i=0→size-1
+
+    * For j=0→size-i-1
+
+      * If tab\[j] > tab\[j+1] → swap.
+
+* 🔑 **Keywords & Concepts**
+
+  * Sorting algorithms.
+  * Time complexity.
+
+* 📌 **You must know**
+
+  * Bubble sort = O(n²).
+
+* 🧪 **Tests**
+
+  ```c
+  int arr[5]={5,3,1,4,2};
+  ft_sort_int_tab(arr,5);
+  // arr = 1,2,3,4,5
+  ```

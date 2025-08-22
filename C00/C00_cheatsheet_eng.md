@@ -1,287 +1,293 @@
-
-## 📌 General Rules (from the subject)
-
-* Submit only the required files in the correct folder names.
-* Allowed function: `write` only.
-* Compilation flags: `-Wall -Wextra -Werror` — any warning is treated as an error.
-* Output must match **exactly** (spaces, commas, newlines).
-  Use `./a.out | cat -e` to visualize hidden characters.
-* Norminette check: `norminette -R CheckForbiddenSourceHeader`.
-* You don’t submit `main()` unless the subject asks for a full program.
-* No extra files in your directory.
+# 🏊 Piscine C00 — Deep Preparation Guide
 
 ---
 
-## 🛠 Quick `write()` reminder
+### **Ex00 – ft\_putchar**
 
-```c
-ssize_t write(int fd, const void *buf, size_t count);
-```
+**Goal:** Write a function to display one character using `write`.
 
-* **fd**: 1 = stdout, 2 = stderr.
-* Returns the number of bytes written, or -1 on error.
-* Needs a **memory address** for `buf` (`&c` for a single char).
-* Doesn’t automatically add `\0` or newline.
+* ❓ **Defense Questions**
 
----
+  * What is the prototype of `write`?
+  * Why use `&c` instead of just `c`?
+  * What does `1` mean in `write(1, &c, 1)`?
 
-## 🔡 ASCII quick list
+* 🧠 **Algorithm**
 
-* `'0'..'9'` = 48..57
-* `'A'..'Z'` = 65..90
-* `'a'..'z'` = 97..122
-* char to digit: `c - '0'`
-* digit to char: `d + '0'`
+  * Take one `char` → pass its **address** to `write`.
 
----
+* 🔑 **Keywords & Concepts**
 
-## **ex00 — ft\_putchar**
+  * `write()` system call (unistd.h).
+  * File descriptors (`0` stdin, `1` stdout, `2` stderr).
+  * Difference between character vs. string.
 
-**You must know:**
+* 📌 **You must know**
 
-* How `write(1, &c, 1)` works for a single character.
-* Difference between `'a'` (char) and `"a"` (string).
-* Why `&c` is required (address of the char in memory).
+  * ASCII basics.
+  * How to compile: `gcc -Wall -Wextra -Werror ft_putchar.c`.
 
-**Defense questions:**
+* 🧪 **Tests**
 
-* What is a **file descriptor**? Why is stdout = 1?
-* Return type of `write` and handling partial writes.
-* Signed vs unsigned `char` and what happens if it’s negative.
-
-**Test ideas:**
-
-* Print spaces, `\n`, symbols, and non-ASCII chars.
-
-**Keywords & Concepts:**
-
-* **File Descriptor** (`fd`)
-* **Standard Output** (`stdout`)
-* **System Call** (vs library call)
-* **Buffer**
-* **Address-of Operator** (`&`)
-* **ssize\_t**
-* **Return Value** of `write`
-* **Partial Write**
----
-
-## **ex01 — ft\_print\_alphabet**
-
-## **ex02 — ft\_print\_reverse\_alphabet**
-
-**You must know:**
-
-* Loop through ASCII from `'a'` to `'z'` (or reverse).
-* No newline unless required.
-* Order matters.
-
-**Defense questions:**
-
-* Can you do it without a loop (recursion)? What’s the base case?
-* How portable is relying on ASCII order?
-
-**Keywords & Concepts:**
-
-* **ASCII Table**
-* **Character Encoding**
-* **Loop (Iteration)**
-* **Recursion** (alternative approach)
-* **Lexicographic Order**
-* **Portability** (assumption that ASCII order is valid)
-* **Locale** (why we stick to C locale in 42)
+  ```c
+  ft_putchar('A'); // should print A
+  ft_putchar('z'); // should print z
+  ```
 
 ---
 
-## **ex03 — ft\_print\_numbers**
+### **Ex01 – ft\_print\_alphabet**
 
-**You must know:**
+**Goal:** Print all lowercase letters from `a` to `z`.
 
-* `'0' + i` to print digits in ASCII.
-* Difference between int 0 and char `'0'`.
+* ❓ **Defense Questions**
 
-**Defense questions:**
+  * How to loop through characters?
+  * Difference between `++` on int and char?
 
-* Why does `'0' + 3` give `'3'`?
-* Difference between printing 10 as a number vs two separate characters `'1'` and `'0'`.
-**Keywords & Concepts:**
+* 🧠 **Algorithm**
 
-* **ASCII Arithmetic** (`'0' + i`)
-* **Character Literal** vs **Integer Literal**
-* **Type Casting**
-* **Contiguous Character Codes**
-* **Off-by-One Error** (loop boundaries)
+  * Initialize `char c = 'a'`.
+  * While `c <= 'z'`, print with `write`.
 
----
+* 🔑 **Keywords & Concepts**
 
-## **ex04 — ft\_is\_negative**
+  * ASCII ordering `'a' → 'z'`.
+  * While loop.
 
-**You must know:**
+* 📌 **You must know**
 
-* Print `'N'` if `n < 0`, `'P'` if `n >= 0`.
-* Zero counts as positive here.
+  * Incrementing chars works like ints (`'a'+1 = 'b'`).
 
-**Defense questions:**
+* 🧪 **Tests**
 
-* What are the limits of `int`? (`INT_MIN` and `INT_MAX`)
-* Difference between `< 0` and `<= 0`.
-
-**Keywords & Concepts:**
-
-* **Conditional Statement** (`if/else`)
-* **Comparison Operators** (`<`, `>=`)
-* **Signed Integer**
-* **Sign Bit**
-* **Integer Range** (`INT_MIN`, `INT_MAX`)
-* **Zero as Positive** (problem-specific rule)
+  ```
+  Output: abcdefghijklmnopqrstuvwxyz
+  ```
 
 ---
 
-## **ex05 — ft\_print\_comb** (three different digits)
+### **Ex02 – ft\_print\_reverse\_alphabet**
 
-**You must know:**
+**Goal:** Print alphabet from `z` to `a`.
 
-* `i < j < k` ensures uniqueness and ascending order.
-* Format: `"012, 013, ... 789"` with no trailing comma.
+* ❓ **Defense Questions**
 
-**Defense questions:**
+  * How to reverse a loop in C?
 
-* How do you detect the last combination to avoid a trailing comma?
-* Why is `987` not printed? (Lexicographic order)
-* How many combinations are there? (C(10,3) = 120)
+* 🧠 **Algorithm**
 
-**Tests:**
+  * Start from `char c = 'z'`.
+  * Decrement until `'a'`.
 
-* Check first: `012, 013, ...`
-* Check last: `789` (no comma).
+* 🔑 **Keywords & Concepts**
 
-**Keywords & Concepts:**
+  * Decrement operator `--`.
 
-* **Combination** (vs permutation)
-* **Nested Loops**
-* **Strictly Increasing Sequence**
-* **Lexicographic Order**
-* **Formatting** (separator rules)
-* **Trailing Separator Problem**
-* **Combinatorics Formula** (C(n, k) = n! / (k!(n-k)!))
+* 📌 **You must know**
 
----
+  * Loops can count backwards too.
 
-## **ex06 — ft\_print\_comb2** (pairs from 00..99)
+* 🧪 **Tests**
 
-**You must know:**
-
-* Always print two digits (leading zero).
-* `ab < cd` prevents duplicates.
-* Format: `"00 01, 00 02, ... 98 99"`
-
-**Defense questions:**
-
-* How to convert int to two chars without printf.
-* Why `01 00` is invalid.
-* Complexity and loop structure.
-
-**Tests:**
-
-* First: `00 01`
-* Last: `98 99` (no comma).
-
-**Keywords & Concepts:**
-
-* **Leading Zero**
-* **Two-Digit Formatting**
-* **Pair Comparison** (`ab < cd`)
-* **Nested Loops with Ranges**
-* **Formatting Rules**
-* **String Representation** of numbers
-* **Edge Case** (last pair without separator)
+  ```
+  Output: zyxwvutsrqponmlkjihgfedcba
+  ```
 
 ---
 
-## **ex07 — ft\_putnbr**
+### **Ex03 – ft\_print\_numbers**
 
-**You must know:**
+**Goal:** Print all digits `0` to `9`.
 
-* Printing any `int` using division/remainder to get digits.
-* Handle negatives with a leading `-`.
-* Special case `INT_MIN` (-2147483648) because `-INT_MIN` overflows.
+* ❓ **Defense Questions**
 
-**Defense questions:**
+  * ASCII value of `'0'`?
+  * Why use chars instead of ints?
 
-* Why does `-INT_MIN` overflow? (Two's complement)
-* Behavior of `/` and `%` with negatives in C (round toward zero).
-* Recursion depth (max \~10 calls).
+* 🧠 **Algorithm**
 
-**Tests:**
+  * Loop `c = '0'` to `'9'`.
 
-* `0`, positive, negative, `INT_MIN`, `INT_MAX`.
+* 🔑 **Keywords & Concepts**
 
-**Keywords & Concepts:**
+  * ASCII `'0' = 48`.
 
-* **Integer to Character Conversion**
-* **Division and Modulo**
-* **Recursion** (digit printing)
-* **Negative Number Handling**
-* **Two’s Complement** (why `-INT_MIN` overflows)
-* **Integer Overflow**
-* **Base Case** (in recursion)
-* **Type Casting to Long**
+* 📌 **You must know**
+
+  * `write` expects chars, not ints.
+
+* 🧪 **Tests**
+
+  ```
+  Output: 0123456789
+  ```
 
 ---
 
-## **ex08 — ft\_print\_combn**
+### **Ex04 – ft\_is\_negative**
 
-**You must know:**
+**Goal:** Display `'N'` if negative, `'P'` if positive or zero.
 
-* Represent combination as an array of `n` strictly increasing digits.
-* Stop when array = `[10-n, ..., 9]`.
-* Carry logic: increment from the right, then reset the right side.
+* ❓ **Defense Questions**
 
-**Defense questions:**
+  * What is the difference between `>=` and `>`?
+  * Why is zero considered positive?
 
-* Why strictly increasing? (Avoid duplicates)
-* Complexity: number of results = C(10, n).
-* Recursion vs iteration trade-offs.
+* 🧠 **Algorithm**
 
-**Tests:**
+  * If `n < 0` → print `'N'`.
+  * Else → print `'P'`.
 
-* n=1 → `0..9`
-* n=2 → `01, 02, ..., 89`
-* n=9 → `012345678, ..., 123456789` (no comma at end)
+* 🔑 **Keywords & Concepts**
 
-**Keywords & Concepts:**
+  * Conditional `if / else`.
+  * Integers sign.
 
-* **Generalized Combination**
-* **Array Representation**
-* **Carry Propagation** (increment logic)
-* **Strictly Increasing Digits**
-* **Stopping Condition**
-* **Combinatorics** (C(10, n))
-* **Lexicographic Generation**
-* **Algorithm Complexity**
+* 📌 **You must know**
 
----
+  * `int` range in C (`-2,147,483,648` to `2,147,483,647`).
 
-## ❌ Common pitfalls in C00
+* 🧪 **Tests**
 
-* Extra/missing spaces, commas, or newlines.
-* Forgetting `INT_MIN` handling in `putnbr`.
-* Missing leading zero in `comb2`.
-* Wrong folder/file name — Moulinette won’t find your file.
-* Using forbidden functions (printf, malloc, etc.) = -42.
+  ```c
+  ft_is_negative(-5); // N
+  ft_is_negative(0);  // P
+  ft_is_negative(7);  // P
+  ```
 
 ---
 
-## ✅ Smart testing tips
+### **Ex05 – ft\_print\_comb**
 
-```bash
-# Compile with all warnings as errors
-gcc -Wall -Wextra -Werror file.c && ./a.out | cat -e
+**Goal:** Print all 3-digit combinations without repetition (012, 013, … 789).
 
-# Compare with expected output
-diff -u expected.txt <(./a.out)
+* ❓ **Defense Questions**
 
-# Try edge cases
-# putnbr: 0, 1, -1, 42, -42, 2147483647, -2147483648
-# comb2: "00 01", ..., "98 99"
-# combn: n=1, n=2, n=9
-```
+  * How do you avoid repetitions like 112 or 221?
+  * Why stop at `789`?
+
+* 🧠 **Algorithm**
+
+  * Triple nested loop: `a` from '0' to '7', `b` from a+1, `c` from b+1.
+  * Print each with `write`.
+  * Add `", "` except last.
+
+* 🔑 **Keywords & Concepts**
+
+  * Nested loops.
+  * ASCII logic for digits.
+
+* 📌 **You must know**
+
+  * The **last case check** (avoid trailing comma).
+
+* 🧪 **Tests**
+
+  ```
+  Output: 012, 013, ..., 789
+  ```
+
+---
+
+### **Ex06 – ft\_print\_comb2**
+
+**Goal:** Print all combinations of two 2-digit numbers from `00 01` to `98 99`.
+
+* ❓ **Defense Questions**
+
+  * Why use `00` instead of `0`?
+  * How to separate numbers with space?
+
+* 🧠 **Algorithm**
+
+  * Two nested loops: `i` from 0 to 98, `j` from i+1 to 99.
+  * Convert int to 2-digit string with `/` and `%`.
+  * Print with space in between.
+
+* 🔑 **Keywords & Concepts**
+
+  * Division (`/`) and modulo (`%`) for digits.
+  * Double loop optimization.
+
+* 📌 **You must know**
+
+  * How to pad numbers with leading zero.
+
+* 🧪 **Tests**
+
+  ```
+  Output starts: 00 01, 00 02, ..., 98 99
+  ```
+
+---
+
+### **Ex07 – ft\_putnbr**
+
+**Goal:** Print any integer (positive or negative).
+
+* ❓ **Defense Questions**
+
+  * How to handle negative numbers?
+  * What about `-2147483648`?
+  * Why use recursion?
+
+* 🧠 **Algorithm**
+
+  * If `nb == INT_MIN` → special case.
+  * If `nb < 0` → print `'-'`, then call recursively with `-nb`.
+  * Print digits with recursion: `ft_putnbr(nb/10)` then last digit.
+
+* 🔑 **Keywords & Concepts**
+
+  * Recursion.
+  * Integer limits.
+
+* 📌 **You must know**
+
+  * `int` range.
+  * How to convert digit → char (`+ '0'`).
+
+* 🧪 **Tests**
+
+  ```c
+  ft_putnbr(42);     // 42
+  ft_putnbr(-42);    // -42
+  ft_putnbr(0);      // 0
+  ft_putnbr(-2147483648); // -2147483648
+  ```
+
+---
+
+### **Ex08 – ft\_print\_combn**
+
+**Goal:** Print all combinations of `n` digits (0 < n < 10).
+
+* ❓ **Defense Questions**
+
+  * What is recursion / backtracking?
+  * How to avoid duplicates?
+
+* 🧠 **Algorithm**
+
+  * Use recursion/backtracking.
+  * Ensure strictly increasing order.
+  * Print digits, add `", "` except last.
+
+* 🔑 **Keywords & Concepts**
+
+  * Recursion.
+  * Backtracking.
+  * Generalization of Ex05 & Ex06.
+
+* 📌 **You must know**
+
+  * How to generate combinations systematically.
+
+* 🧪 **Tests**
+
+  ```
+  n = 2 → 01, 02, ..., 89
+  n = 3 → 012, 013, ..., 789
+  n = 9 → 123456789
+  ```

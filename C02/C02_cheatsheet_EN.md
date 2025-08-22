@@ -1,4 +1,4 @@
-# 42 Piscine — C 02 (Deep Preparation Guide, in English)
+# 42 Piscine — C 02 (Deep Preparation Guide)
 
 This module is all about **string manipulation in C**, building your own versions of common libc functions.  
 Evaluators often ask questions beyond the implementation: **memory safety, ASCII details, pointer arithmetic, edge cases**.  

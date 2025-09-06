@@ -1,455 +1,221 @@
-# 42 Piscine — C 02 (Deep Preparation Guide)
+# 42 Piscine — C 02 (Deep Preparation Guide with Algorithm Concepts)
 
-This module focuses on **string copying, validation checks, case transformations, and memory printing**.  
-Expect evaluators to test **pointer arithmetic, ASCII logic, parsing, and memory visualization**.
-
+This module focuses on **string copy, validation, transformations, and memory visualization**.  
+Each exercise is tied to a **fundamental algorithm or concept** that evaluators may expect you to explain.
 
 ---
 
 ## ex00 — ft_strcpy
 **You must know:**
-- Reimplement `strcpy`.  
-- Copies `src` into `dest`, including `'\0'`.  
+- Copy a string from source to destination until `'\0'`.  
 
-**Algorithm:**
-```c
-i = 0;
-while (src[i] != '\0')
-    dest[i] = src[i], i++;
-dest[i] = '\0';
-return dest;
-```
-
-**Tests:**
-
-```c
-char s1[10]; 
-ft_strcpy(s1, "42");
-printf("%s\n", s1); // 42
-```
+**Algorithm concept:**  
+- **Sequential copy algorithm** → scan characters one by one and copy until end marker (null terminator).  
 
 **Defense questions:**
+- Why is null terminator important?  
+- What happens if `dest` is too small?  
 
-* What happens if `dest` is too small?
-* Difference between `strcpy` and `memcpy`?
-* Why must we copy the null terminator?
-
-**Keywords & Concepts:**
-
-* **Null-terminated strings**.
-* **Buffer overflow**.
-* **Shallow vs deep copy**.
+**Keywords & Concepts:**  
+- String copy, buffer overflow, null-terminated string.
 
 ---
 
-## ex01 — ft\_strncpy
-
+## ex01 — ft_strncpy
 **You must know:**
+- Copy at most `n` characters, pad with `'\0'` if needed.  
 
-* Reimplement `strncpy`.
-* Copies up to `n` chars, padding with `'\0'` if needed.
+**Algorithm concept:**  
+- **Fixed-length copy algorithm** → copy up to n chars, then fill remaining space with nulls if shorter.  
 
-**Algorithm:**
+**Defense questions:**  
+- What happens if `n` < length of source?  
+- Why is zero-padding needed?  
 
-```c
-for (i = 0; i < n && src[i]; i++) 
-    dest[i] = src[i];
-while (i < n) dest[i++] = '\0';
-```
-
-**Tests:**
-
-```c
-char s1[10]; 
-ft_strncpy(s1, "Hi", 5);
-printf("%s\n", s1); // Hi\0\0\0
-```
-
-**Defense questions:**
-
-* What if `n` < strlen(src)?
-* Why pad with `\0`?
-* Difference with `strcpy`?
-
-**Keywords & Concepts:**
-
-* **Partial copy**.
-* **Zero-padding**.
-* **Fixed-size buffers**.
+**Keywords & Concepts:**  
+- Partial copy, buffer padding, safe string handling.
 
 ---
 
-## ex02 — ft\_str\_is\_alpha
+## ex02 — ft_str_is_alpha
+**You must know:**  
+- Check if string contains only alphabetic chars.  
 
-**You must know:**
+**Algorithm concept:**  
+- **Validation scan algorithm** → loop through string, verify each char falls inside ASCII alpha ranges.  
 
-* Returns 1 if all chars are alphabetic (A–Z, a–z), else 0.
-* Empty string → return 1.
+**Defense questions:**  
+- Why return 1 for empty string?  
 
-**Algorithm:**
-Loop over chars, check:
-
-```c
-if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')))
-    return 0;
-return 1;
-```
-
-**Tests:**
-
-```c
-printf("%d\n", ft_str_is_alpha("Hello")); // 1
-printf("%d\n", ft_str_is_alpha("Hi42"));  // 0
-```
-
-**Defense questions:**
-
-* Why return 1 for empty string?
-* How ASCII ranges define alpha?
-
-**Keywords & Concepts:**
-
-* **Character classes**.
-* **Empty string convention**.
-* **ASCII ranges**.
+**Keywords & Concepts:**  
+- Character classification, ASCII ranges, validation.
 
 ---
 
-## ex03 — ft\_str\_is\_numeric
+## ex03 — ft_str_is_numeric
+**You must know:**  
+- Check if string contains only digits.  
 
-**You must know:**
+**Algorithm concept:**  
+- **Digit validation scan** → check every char between '0'–'9'.  
 
-* Returns 1 if all chars are digits.
+**Defense questions:**  
+- ASCII codes for digits?  
+- Why empty string = 1?  
 
-**Algorithm:**
-
-```c
-if (c < '0' || c > '9') return 0;
-```
-
-**Tests:**
-
-```c
-printf("%d\n", ft_str_is_numeric("123")); // 1
-printf("%d\n", ft_str_is_numeric("12a")); // 0
-```
-
-**Defense questions:**
-
-* What’s ASCII code for '0' and '9'?
-* Empty string → why return 1?
-
-**Keywords & Concepts:**
-
-* **Digit validation**.
-* **ASCII encoding**.
+**Keywords & Concepts:**  
+- ASCII digits, numeric validation, parsing.
 
 ---
 
-## ex04 — ft\_str\_is\_lowercase
+## ex04 — ft_str_is_lowercase
+**You must know:**  
+- Verify all chars are lowercase.  
 
-**You must know:**
+**Algorithm concept:**  
+- **Range check algorithm** → confirm each char in 'a'–'z'.  
 
-* Returns 1 if all chars are lowercase.
+**Defense questions:**  
+- Why validate ranges instead of checking all letters manually?  
 
-**Algorithm:**
-
-```c
-if (c < 'a' || c > 'z') return 0;
-```
-
-**Tests:**
-
-```c
-printf("%d\n", ft_str_is_lowercase("hello")); // 1
-printf("%d\n", ft_str_is_lowercase("Hi"));    // 0
-```
-
-**Defense questions:**
-
-* Why empty string = 1?
-* What ASCII range is lowercase?
-
-**Keywords & Concepts:**
-
-* **Lowercase ASCII**.
-* **String validation**.
+**Keywords & Concepts:**  
+- ASCII lowercase, validation, scanning.
 
 ---
 
-## ex05 — ft\_str\_is\_uppercase
+## ex05 — ft_str_is_uppercase
+**You must know:**  
+- Verify all chars are uppercase.  
 
-**You must know:**
+**Algorithm concept:**  
+- **Range check validation** → test every char in 'A'–'Z'.  
 
-* Returns 1 if all chars are uppercase.
+**Defense questions:**  
+- What happens if string has mixed cases?  
 
-**Algorithm:**
-Check `c >= 'A' && c <= 'Z'`.
-
-**Tests:**
-
-```c
-printf("%d\n", ft_str_is_uppercase("HELLO")); // 1
-printf("%d\n", ft_str_is_uppercase("HeLLo")); // 0
-```
-
-**Defense questions:**
-
-* Why define uppercase separately from lowercase?
-
-**Keywords & Concepts:**
-
-* **Uppercase ASCII**.
-* **Validation functions**.
+**Keywords & Concepts:**  
+- Uppercase validation, ASCII ranges.
 
 ---
 
-## ex06 — ft\_str\_is\_printable
+## ex06 — ft_str_is_printable
+**You must know:**  
+- Return 1 if all chars are printable (ASCII 32–126).  
 
-**You must know:**
+**Algorithm concept:**  
+- **Printability validation** → check ASCII code range validity.  
 
-* Printable ASCII range: 32–126.
+**Defense questions:**  
+- Why are newline, tab not printable?  
+- What is ASCII 127?  
 
-**Algorithm:**
-
-```c
-if (c < 32 || c > 126) return 0;
-```
-
-**Tests:**
-
-```c
-printf("%d\n", ft_str_is_printable("Hi!")); // 1
-printf("%d\n", ft_str_is_printable("Hi\n")); // 0
-```
-
-**Defense questions:**
-
-* Why `'\n'` is not printable?
-* What is ASCII 127?
-
-**Keywords & Concepts:**
-
-* **Printable ASCII range**.
-* **Control characters**.
+**Keywords & Concepts:**  
+- Printable vs control characters, ASCII standard.
 
 ---
 
-## ex07 — ft\_strupcase
+## ex07 — ft_strupcase
+**You must know:**  
+- Transform lowercase → uppercase.  
 
-**You must know:**
+**Algorithm concept:**  
+- **Case transformation algorithm** → add/subtract fixed ASCII offset to shift case.  
 
-* Convert lowercase → uppercase in place.
+**Defense questions:**  
+- Why ASCII offset = 32?  
 
-**Algorithm:**
-
-```c
-if (c >= 'a' && c <= 'z')
-    c -= 32;   // ASCII diff
-```
-
-**Tests:**
-
-```c
-char s[]="hello";
-printf("%s\n", ft_strupcase(s)); // HELLO
-```
-
-**Defense questions:**
-
-* Why 32 difference between lower/upper?
-* Why return str?
-
-**Keywords & Concepts:**
-
-* **ASCII arithmetic**.
-* **In-place modification**.
+**Keywords & Concepts:**  
+- ASCII arithmetic, uppercase conversion.
 
 ---
 
-## ex08 — ft\_strlowcase
+## ex08 — ft_strlowcase
+**You must know:**  
+- Transform uppercase → lowercase.  
 
-**You must know:**
+**Algorithm concept:**  
+- **Case transformation algorithm** → opposite of ex07, apply ASCII offset.  
 
-* Convert uppercase → lowercase.
+**Defense questions:**  
+- Why modify in place instead of returning new string?  
 
-**Algorithm:**
-
-```c
-if (c >= 'A' && c <= 'Z')
-    c += 32;
-```
-
-**Tests:**
-
-```c
-char s[]="HELLO";
-printf("%s\n", ft_strlowcase(s)); // hello
-```
-
-**Defense questions:**
-
-* Why ASCII offset = 32?
-* Difference between returning str and void?
-
-**Keywords & Concepts:**
-
-* **Case conversion**.
-* **Mutability**.
+**Keywords & Concepts:**  
+- Case transformation, mutability, ASCII offset.
 
 ---
 
-## ex09 — ft\_strcapitalize
+## ex09 — ft_strcapitalize
+**You must know:**  
+- Capitalize first letter of each word, lowercase the rest.  
 
-**You must know:**
+**Algorithm concept:**  
+- **Parsing + word-boundary detection** → scan, detect start of word, capitalize first, lowercase following.  
 
-* Capitalize first letter of each word.
-* Other letters → lowercase.
-* Word = sequence of alphanumeric chars.
+**Defense questions:**  
+- What defines a "word"?  
+- How do you detect alphanumeric boundaries?  
 
-**Algorithm:**
-
-1. Lowercase all.
-2. If first char alnum → uppercase.
-3. After non-alnum, next alnum → uppercase.
-
-**Tests:**
-
-```c
-char s[]="salut, comment tu vas ? 42mots";
-printf("%s\n", ft_strcapitalize(s));
-// Salut, Comment Tu Vas ? 42mots
-```
-
-**Defense questions:**
-
-* What defines a word?
-* How to detect alphanumeric?
-
-**Keywords & Concepts:**
-
-* **Parsing algorithm**.
-* **Word boundaries**.
-* **ASCII checks**.
+**Keywords & Concepts:**  
+- Tokenization, parsing, capitalization algorithm.
 
 ---
 
-## ex10 — ft\_strlcpy
+## ex10 — ft_strlcpy
+**You must know:**  
+- Copy safely into fixed buffer size, always null-terminate.  
 
-**You must know:**
+**Algorithm concept:**  
+- **Safe copy with truncation detection** → copy up to `size-1`, track full length of source.  
 
-* Reimplement `strlcpy`.
-* Copies up to `size-1` chars, null-terminates.
-* Returns src length.
+**Defense questions:**  
+- Why return source length?  
+- What happens if size = 0?  
 
-**Algorithm:**
-
-```c
-len = strlen(src);
-if (size > 0) {
-    copy up to size-1 chars;
-    dest[size-1] = '\0';
-}
-return len;
-```
-
-**Tests:**
-
-```c
-char d[5];
-printf("%u\n", ft_strlcpy(d,"Hello",5)); // 5
-printf("%s\n", d); // Hell
-```
-
-**Defense questions:**
-
-* Why return src length?
-* What if size=0?
-
-**Keywords & Concepts:**
-
-* **Safe copy**.
-* **Truncation detection**.
+**Keywords & Concepts:**  
+- Safe string functions, truncation, buffer management.
 
 ---
 
-## ex11 — ft\_putstr\_non\_printable
+## ex11 — ft_putstr_non_printable
+**You must know:**  
+- Display string, non-printable chars → hex with `\`.  
 
-**You must know:**
+**Algorithm concept:**  
+- **String formatting with hex encoding** → detect non-printables, transform into hexadecimal escape sequence.  
 
-* Print string.
-* Replace non-printable char with `\xx` (hex lowercase).
+**Defense questions:**  
+- Why hex instead of decimal?  
+- Why always 2 digits in hex?  
 
-**Algorithm:**
-
-```c
-if (c < 32 || c > 126) {
-    write("\\");
-    print hex of c;
-}
-```
-
-**Tests:**
-
-```c
-ft_putstr_non_printable("Coucou\ntu vas bien ?");
-// Coucou\0atu vas bien ?
-```
-
-**Defense questions:**
-
-* Why use hex representation?
-* Why lowercase hex?
-
-**Keywords & Concepts:**
-
-* **Hexadecimal formatting**.
-* **Write system call**.
-* **Non-printable encoding**.
+**Keywords & Concepts:**  
+- Hexadecimal representation, escape sequences, non-printables.
 
 ---
 
-## ex12 — ft\_print\_memory
+## ex12 — ft_print_memory
+**You must know:**  
+- Display memory content with hex + ASCII.  
 
-**You must know:**
+**Algorithm concept:**  
+- **Hex dump algorithm** →  
+  1. Print address.  
+  2. Print bytes in hex, grouped.  
+  3. Print ASCII (dots for non-printables).  
 
-* Print memory in hex dump format.
-* Columns: address, hex values, ASCII chars.
-* 16 chars per line.
-* Non-printable → dot.
+**Defense questions:**  
+- Why group memory by 16 bytes?  
+- What’s the difference between pointer arithmetic and array indexing?  
 
-**Algorithm:**
-
-1. Print address (padded hex).
-2. Print hex content (grouped by 2).
-3. Print ASCII (or dot).
-   → Repeat for `size` bytes.
-
-**Tests:**
-Use sample from subject.
-
-**Defense questions:**
-
-* Why group by 16 bytes?
-* Why use dot for non-printables?
-* How to handle size=0?
-
-**Keywords & Concepts:**
-
-* **Hex dump algorithm**.
-* **Pointer arithmetic**.
-* **ASCII visualization**.
+**Keywords & Concepts:**  
+- Memory dump, hex formatting, visualization, pointer arithmetic.
 
 ---
 
-# 🧰 Core Concepts for C02
-
-* **Copying algorithms**: strcpy, strncpy, strlcpy.
-* **Validation algorithms**: alpha, numeric, lowercase, uppercase, printable.
-* **Case conversion**: ASCII offsets.
-* **Parsing & capitalization**.
-* **Hexadecimal formatting**.
-* **Memory printing & visualization**.
-* **Common pitfalls**: buffer overflow, truncation, empty strings.
-
-```
+# 🧰 Core Algorithm Concepts for C02
+- **Sequential copy** (strcpy).  
+- **Fixed-length copy with padding** (strncpy).  
+- **Validation scans** (alpha, digit, printable, case checks).  
+- **ASCII-based transformations** (upper/lower conversion).  
+- **Parsing with boundaries** (capitalize).  
+- **Safe copying with truncation handling** (strlcpy).  
+- **Formatting algorithms** (escape hex, hex dump).  

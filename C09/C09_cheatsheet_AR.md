@@ -33,7 +33,7 @@
 sh libft_creator.sh
 ar t libft.a          # تشوف المحتوى
 gcc main.c libft.a && ./a.out
-
+```
 **Keywords & Concepts:**
 
 * static library (`.a`)

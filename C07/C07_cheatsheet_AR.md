@@ -1,4 +1,4 @@
-# 1337 Piscine — C 07 (شرح بالدارجة)
+# 1337 Piscine — C 07
 
 هاد الموديول ديال C07 كيركز على:  
 - **dynamic memory allocation** (malloc, free)  

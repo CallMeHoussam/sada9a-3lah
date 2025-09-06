@@ -1,39 +1,42 @@
 # 42 Piscine — C 02 (Deep Preparation Guide)
 
-This module is all about **string manipulation in C**, building your own versions of common libc functions.  
-Evaluators often ask questions beyond the implementation: **memory safety, ASCII details, pointer arithmetic, edge cases**.  
-
-Each exercise includes:  
-- **You must know**  
-- **Defense questions**  
-- **Tests**  
-- **Keywords & Concepts (with explanations)**  
+This module focuses on **string copying, validation checks, case transformations, and memory printing**.  
+Expect evaluators to test **pointer arithmetic, ASCII logic, parsing, and memory visualization**.
 
 ---
 
 ## ex00 — ft_strcpy
 **You must know:**
-- Reimplement `strcpy(dest, src)`.  
-- Copies characters from `src` to `dest`, including the terminating `'\0'`.  
-- `dest` must have enough allocated space.  
+- Reimplement `strcpy`.  
+- Copies `src` into `dest`, including `'\0'`.  
 
-**Defense questions:**
-- What happens if `dest` is smaller than `src`? (→ Buffer overflow, undefined behavior).  
-- What if `src` and `dest` overlap? (→ Undefined behavior, not safe).  
-- Why do strings in C always need `'\0'`?  
+**Algorithm:**
+```c
+i = 0;
+while (src[i] != '\0')
+    dest[i] = src[i], i++;
+dest[i] = '\0';
+return dest;
 
 **Tests:**
+
 ```c
-char src[] = "Hello";
-char dest[10];
-printf("%s\n", ft_strcpy(dest, src)); // Hello
+char s1[10]; 
+ft_strcpy(s1, "42");
+printf("%s\n", s1); // 42
+```
+
+**Defense questions:**
+
+* What happens if `dest` is too small?
+* Difference between `strcpy` and `memcpy`?
+* Why must we copy the null terminator?
 
 **Keywords & Concepts:**
 
-* **Null-terminated string** → In C, end marked with `'\0'`.
-* **Buffer overflow** → Writing past allocated memory causes UB (security risk).
-* **Pointer iteration** → Using `*p++` to copy values.
-* **Overlapping memory** → Standard `strcpy` does not handle it; use `memmove` for safe overlap.
+* **Null-terminated strings**.
+* **Buffer overflow**.
+* **Shallow vs deep copy**.
 
 ---
 
@@ -41,21 +44,36 @@ printf("%s\n", ft_strcpy(dest, src)); // Hello
 
 **You must know:**
 
-* Like `strcpy`, but with a limit `n`.
-* If `src` < `n`, fills remaining space with `'\0'`.
-* If `src` > `n`, no `'\0'` added → potential non-null-terminated string.
+* Reimplement `strncpy`.
+* Copies up to `n` chars, padding with `'\0'` if needed.
+
+**Algorithm:**
+
+```c
+for (i = 0; i < n && src[i]; i++) 
+    dest[i] = src[i];
+while (i < n) dest[i++] = '\0';
+```
+
+**Tests:**
+
+```c
+char s1[10]; 
+ft_strncpy(s1, "Hi", 5);
+printf("%s\n", s1); // Hi\0\0\0
+```
 
 **Defense questions:**
 
-* Difference between `strcpy` and `strncpy`?
-* Why is `strncpy` considered unsafe sometimes?
-* What’s the advantage of padding with `'\0'`?
+* What if `n` < strlen(src)?
+* Why pad with `\0`?
+* Difference with `strcpy`?
 
 **Keywords & Concepts:**
 
-* **Padding** → Remaining bytes filled with zeros.
-* **Truncation** → If `src` longer than `n`, `dest` may not have `'\0'`.
-* **Safer alternatives** → `strlcpy`.
+* **Partial copy**.
+* **Zero-padding**.
+* **Fixed-size buffers**.
 
 ---
 
@@ -63,21 +81,35 @@ printf("%s\n", ft_strcpy(dest, src)); // Hello
 
 **You must know:**
 
-* Returns `1` if all characters are alphabetic (A–Z, a–z).
-* Returns `1` if string is empty.
+* Returns 1 if all chars are alphabetic (A–Z, a–z), else 0.
+* Empty string → return 1.
+
+**Algorithm:**
+Loop over chars, check:
+
+```c
+if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')))
+    return 0;
+return 1;
+```
+
+**Tests:**
+
+```c
+printf("%d\n", ft_str_is_alpha("Hello")); // 1
+printf("%d\n", ft_str_is_alpha("Hi42"));  // 0
+```
 
 **Defense questions:**
 
-* Why is an empty string considered valid?
-* What’s the ASCII range for uppercase and lowercase letters?
+* Why return 1 for empty string?
+* How ASCII ranges define alpha?
 
 **Keywords & Concepts:**
 
-* **Validation functions** → Always return boolean-like values.
-* **ASCII Ranges**:
-
-  * 'A'–'Z' = 65–90
-  * 'a'–'z' = 97–122
+* **Character classes**.
+* **Empty string convention**.
+* **ASCII ranges**.
 
 ---
 
@@ -85,18 +117,30 @@ printf("%s\n", ft_strcpy(dest, src)); // Hello
 
 **You must know:**
 
-* Returns `1` if all characters are digits (0–9).
-* Empty string returns `1`.
+* Returns 1 if all chars are digits.
+
+**Algorithm:**
+
+```c
+if (c < '0' || c > '9') return 0;
+```
+
+**Tests:**
+
+```c
+printf("%d\n", ft_str_is_numeric("123")); // 1
+printf("%d\n", ft_str_is_numeric("12a")); // 0
+```
 
 **Defense questions:**
 
-* What’s the ASCII code for `'0'` and `'9'`?
-* What’s the difference between `'0'` and integer `0`?
+* What’s ASCII code for '0' and '9'?
+* Empty string → why return 1?
 
 **Keywords & Concepts:**
 
-* **ASCII Digits**: '0'=48 … '9'=57.
-* **Character literal vs integer literal**: `'0'` ≠ `0`.
+* **Digit validation**.
+* **ASCII encoding**.
 
 ---
 
@@ -104,12 +148,30 @@ printf("%s\n", ft_strcpy(dest, src)); // Hello
 
 **You must know:**
 
-* Checks only lowercase characters (a–z).
+* Returns 1 if all chars are lowercase.
+
+**Algorithm:**
+
+```c
+if (c < 'a' || c > 'z') return 0;
+```
+
+**Tests:**
+
+```c
+printf("%d\n", ft_str_is_lowercase("hello")); // 1
+printf("%d\n", ft_str_is_lowercase("Hi"));    // 0
+```
 
 **Defense questions:**
 
-* ASCII codes for lowercase letters?
-* Empty string result?
+* Why empty string = 1?
+* What ASCII range is lowercase?
+
+**Keywords & Concepts:**
+
+* **Lowercase ASCII**.
+* **String validation**.
 
 ---
 
@@ -117,12 +179,26 @@ printf("%s\n", ft_strcpy(dest, src)); // Hello
 
 **You must know:**
 
-* Same idea, but uppercase only (A–Z).
+* Returns 1 if all chars are uppercase.
+
+**Algorithm:**
+Check `c >= 'A' && c <= 'Z'`.
+
+**Tests:**
+
+```c
+printf("%d\n", ft_str_is_uppercase("HELLO")); // 1
+printf("%d\n", ft_str_is_uppercase("HeLLo")); // 0
+```
 
 **Defense questions:**
 
-* Why can’t we just use `isalpha()`? (because `isalpha` includes both cases).
-* How to convert uppercase → lowercase using ASCII math?
+* Why define uppercase separately from lowercase?
+
+**Keywords & Concepts:**
+
+* **Uppercase ASCII**.
+* **Validation functions**.
 
 ---
 
@@ -130,19 +206,30 @@ printf("%s\n", ft_strcpy(dest, src)); // Hello
 
 **You must know:**
 
-* Checks if all characters are printable ASCII (32–126).
-* Control characters (<32) and DEL (127) are non-printable.
+* Printable ASCII range: 32–126.
+
+**Algorithm:**
+
+```c
+if (c < 32 || c > 126) return 0;
+```
+
+**Tests:**
+
+```c
+printf("%d\n", ft_str_is_printable("Hi!")); // 1
+printf("%d\n", ft_str_is_printable("Hi\n")); // 0
+```
 
 **Defense questions:**
 
-* What are control characters? (tab, newline, bell, etc.).
-* Why does C use ASCII 32 as space?
+* Why `'\n'` is not printable?
+* What is ASCII 127?
 
 **Keywords & Concepts:**
 
-* **Printable range**: 32–126.
-* **Control chars**: <32 (tab, CR, LF, etc.).
-* **DEL**: ASCII 127, non-printable.
+* **Printable ASCII range**.
+* **Control characters**.
 
 ---
 
@@ -150,17 +237,31 @@ printf("%s\n", ft_strcpy(dest, src)); // Hello
 
 **You must know:**
 
-* Converts lowercase → uppercase.
+* Convert lowercase → uppercase in place.
+
+**Algorithm:**
+
+```c
+if (c >= 'a' && c <= 'z')
+    c -= 32;   // ASCII diff
+```
+
+**Tests:**
+
+```c
+char s[]="hello";
+printf("%s\n", ft_strupcase(s)); // HELLO
+```
 
 **Defense questions:**
 
-* What’s the ASCII difference between 'a' and 'A'? (32).
-* Why only letters change, not symbols or digits?
+* Why 32 difference between lower/upper?
+* Why return str?
 
 **Keywords & Concepts:**
 
-* **Case conversion** → subtract/add 32.
-* **Idempotence** → Applying multiple times has no further effect.
+* **ASCII arithmetic**.
+* **In-place modification**.
 
 ---
 
@@ -168,11 +269,31 @@ printf("%s\n", ft_strcpy(dest, src)); // Hello
 
 **You must know:**
 
-* Converts uppercase → lowercase.
+* Convert uppercase → lowercase.
+
+**Algorithm:**
+
+```c
+if (c >= 'A' && c <= 'Z')
+    c += 32;
+```
+
+**Tests:**
+
+```c
+char s[]="HELLO";
+printf("%s\n", ft_strlowcase(s)); // hello
+```
 
 **Defense questions:**
 
-* ASCII math for conversion?
+* Why ASCII offset = 32?
+* Difference between returning str and void?
+
+**Keywords & Concepts:**
+
+* **Case conversion**.
+* **Mutability**.
 
 ---
 
@@ -180,21 +301,34 @@ printf("%s\n", ft_strcpy(dest, src)); // Hello
 
 **You must know:**
 
-* Capitalizes first character of each word.
-* Words = alphanumeric sequences.
-* Non-alphanumeric → treated as separators.
-* Rest of word becomes lowercase.
+* Capitalize first letter of each word.
+* Other letters → lowercase.
+* Word = sequence of alphanumeric chars.
+
+**Algorithm:**
+
+1. Lowercase all.
+2. If first char alnum → uppercase.
+3. After non-alnum, next alnum → uppercase.
+
+**Tests:**
+
+```c
+char s[]="salut, comment tu vas ? 42mots";
+printf("%s\n", ft_strcapitalize(s));
+// Salut, Comment Tu Vas ? 42mots
+```
 
 **Defense questions:**
 
-* How do you define a “word”?
-* What if a word starts with a digit?
+* What defines a word?
+* How to detect alphanumeric?
 
 **Keywords & Concepts:**
 
-* **Word boundary** → separator = non-alphanumeric.
-* **Normalization** → enforce consistent style.
-* **Alphanumeric check**.
+* **Parsing algorithm**.
+* **Word boundaries**.
+* **ASCII checks**.
 
 ---
 
@@ -202,21 +336,38 @@ printf("%s\n", ft_strcpy(dest, src)); // Hello
 
 **You must know:**
 
-* Copies up to `size - 1` chars from `src` to `dest`.
-* Always null-terminates (if `size > 0`).
-* Returns length of `src`.
+* Reimplement `strlcpy`.
+* Copies up to `size-1` chars, null-terminates.
+* Returns src length.
+
+**Algorithm:**
+
+```c
+len = strlen(src);
+if (size > 0) {
+    copy up to size-1 chars;
+    dest[size-1] = '\0';
+}
+return len;
+```
+
+**Tests:**
+
+```c
+char d[5];
+printf("%u\n", ft_strlcpy(d,"Hello",5)); // 5
+printf("%s\n", d); // Hell
+```
 
 **Defense questions:**
 
-* Difference `strncpy` vs `strlcpy`?
-* Why is `strlcpy` considered safer?
-* What happens if `size=0`?
+* Why return src length?
+* What if size=0?
 
 **Keywords & Concepts:**
 
-* **Buffer size awareness**.
-* **Return value** → helps detect truncation.
-* **Safer copy**.
+* **Safe copy**.
+* **Truncation detection**.
 
 ---
 
@@ -224,28 +375,35 @@ printf("%s\n", ft_strcpy(dest, src)); // Hello
 
 **You must know:**
 
-* Prints string.
-* Non-printable chars → replaced by `\xx` (hex, lowercase).
-* Uses only `write()`.
+* Print string.
+* Replace non-printable char with `\xx` (hex lowercase).
 
-**Defense questions:**
+**Algorithm:**
 
-* What’s an escape sequence?
-* Why use hex representation?
-* Difference between lowercase vs uppercase hex?
+```c
+if (c < 32 || c > 126) {
+    write("\\");
+    print hex of c;
+}
+```
 
 **Tests:**
 
 ```c
 ft_putstr_non_printable("Coucou\ntu vas bien ?");
-// Expected: Coucou\0atu vas bien ?
+// Coucou\0atu vas bien ?
 ```
+
+**Defense questions:**
+
+* Why use hex representation?
+* Why lowercase hex?
 
 **Keywords & Concepts:**
 
-* **Hexadecimal encoding** → 0–15 → 0–9a–f.
-* **Write system call** → unbuffered.
-* **Escape notation**.
+* **Hexadecimal formatting**.
+* **Write system call**.
+* **Non-printable encoding**.
 
 ---
 
@@ -253,38 +411,43 @@ ft_putstr_non_printable("Coucou\ntu vas bien ?");
 
 **You must know:**
 
-* Print memory dump:
+* Print memory in hex dump format.
+* Columns: address, hex values, ASCII chars.
+* 16 chars per line.
+* Non-printable → dot.
 
-  1. Address.
-  2. Hex bytes (16 per line).
-  3. Printable chars (non-printable → `.`).
+**Algorithm:**
+
+1. Print address (padded hex).
+2. Print hex content (grouped by 2).
+3. Print ASCII (or dot).
+   → Repeat for `size` bytes.
+
+**Tests:**
+Use sample from subject.
 
 **Defense questions:**
 
-* What’s the difference between an address and the value stored there?
-* Why group 16 bytes per line?
-* How do you align incomplete lines?
+* Why group by 16 bytes?
+* Why use dot for non-printables?
+* How to handle size=0?
 
 **Keywords & Concepts:**
 
-* **Memory representation** → visualize raw data.
-* **Hex dump format**.
+* **Hex dump algorithm**.
 * **Pointer arithmetic**.
-* **Endianness** → memory byte order (extra tricky question!).
+* **ASCII visualization**.
 
 ---
 
 # 🧰 Core Concepts for C02
 
-* **ASCII table** → ranges (letters, digits, printable, control).
-* **Null-terminated strings** → `'\0'`.
-* **Pointer arithmetic** → `ptr++`.
-* **Buffer overflows** → common pitfall in string functions.
-* **String normalization** → capitalize, case conversion.
-* **Hexadecimal representation** → common in debugging.
-* **Memory visualization** → hex dumps, addresses.
-* **Safety differences** between `strcpy`, `strncpy`, `strlcpy`.
-* **Idempotence** in transformations (uppercase twice = same).
-* **Undefined Behavior (UB)** → overlapping buffers, missing `\0`.
+* **Copying algorithms**: strcpy, strncpy, strlcpy.
+* **Validation algorithms**: alpha, numeric, lowercase, uppercase, printable.
+* **Case conversion**: ASCII offsets.
+* **Parsing & capitalization**.
+* **Hexadecimal formatting**.
+* **Memory printing & visualization**.
+* **Common pitfalls**: buffer overflow, truncation, empty strings.
 
 ```

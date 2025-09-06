@@ -1,4 +1,4 @@
-# 42 Piscine — C00 Cheat Sheet (Darija)
+# 42 Piscine — C00 Cheat Sheet 
 
 > هدف هاد الورقة: تعطيك خلاصة سريعة + نقاط عميقة للأسئلة ديال الدفاع (بدون حلول). استعملها مع `cat -e` و `gcc -Wall -Wextra -Werror` فالتجارب.
 

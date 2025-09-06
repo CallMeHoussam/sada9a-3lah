@@ -33,6 +33,7 @@ Each exercise is tied to a **fundamental algorithm or concept** that evaluators 
 **Defense questions:**  
 - What happens if `n` < length of source?  
 - Why is zero-padding needed?  
+- Difference with `strcpy`?
 
 **Keywords & Concepts:**  
 - Partial copy, buffer padding, safe string handling.
@@ -48,6 +49,7 @@ Each exercise is tied to a **fundamental algorithm or concept** that evaluators 
 
 **Defense questions:**  
 - Why return 1 for empty string?  
+- How ASCII ranges define alpha?
 
 **Keywords & Concepts:**  
 - Character classification, ASCII ranges, validation.
@@ -81,7 +83,9 @@ Each exercise is tied to a **fundamental algorithm or concept** that evaluators 
 - Why validate ranges instead of checking all letters manually?  
 
 **Keywords & Concepts:**  
-- ASCII lowercase, validation, scanning.
+- ASCII lowercase,
+- validation,
+- scanning.
 
 ---
 
@@ -94,9 +98,11 @@ Each exercise is tied to a **fundamental algorithm or concept** that evaluators 
 
 **Defense questions:**  
 - What happens if string has mixed cases?  
+- Why define uppercase separately from lowercase?
 
 **Keywords & Concepts:**  
-- Uppercase validation, ASCII ranges.
+- Uppercase validation,
+- ASCII ranges.
 
 ---
 
@@ -112,7 +118,8 @@ Each exercise is tied to a **fundamental algorithm or concept** that evaluators 
 - What is ASCII 127?  
 
 **Keywords & Concepts:**  
-- Printable vs control characters, ASCII standard.
+- Printable vs control characters,
+- ASCII standard.
 
 ---
 
@@ -125,9 +132,11 @@ Each exercise is tied to a **fundamental algorithm or concept** that evaluators 
 
 **Defense questions:**  
 - Why ASCII offset = 32?  
+- Why return str?
 
 **Keywords & Concepts:**  
-- ASCII arithmetic, uppercase conversion.
+- ASCII arithmetic,
+- uppercase conversion.
 
 ---
 
@@ -140,9 +149,12 @@ Each exercise is tied to a **fundamental algorithm or concept** that evaluators 
 
 **Defense questions:**  
 - Why modify in place instead of returning new string?  
+- Difference between returning str and void?
 
 **Keywords & Concepts:**  
-- Case transformation, mutability, ASCII offset.
+- Case transformation,
+- mutability,
+- ASCII offset.
 
 ---
 
@@ -207,6 +219,7 @@ Each exercise is tied to a **fundamental algorithm or concept** that evaluators 
 **Defense questions:**  
 - Why group memory by 16 bytes?  
 - What’s the difference between pointer arithmetic and array indexing?  
+- How to handle size=0?
 
 **Keywords & Concepts:**  
 - Memory dump, hex formatting, visualization, pointer arithmetic.

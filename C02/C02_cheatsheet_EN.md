@@ -13,8 +13,10 @@ Each exercise is tied to a **fundamental algorithm or concept** that evaluators 
 - **Sequential copy algorithm** → scan characters one by one and copy until end marker (null terminator).  
 
 **Defense questions:**
-- Why is null terminator important?  
+- Why is `null terminator` important?  
 - What happens if `dest` is too small?  
+- Difference between `strcpy` and memcpy?
+- Why must we copy the null terminator?
 
 **Keywords & Concepts:**  
 - String copy, buffer overflow, null-terminated string.

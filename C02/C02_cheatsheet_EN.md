@@ -3,6 +3,7 @@
 This module focuses on **string copying, validation checks, case transformations, and memory printing**.  
 Expect evaluators to test **pointer arithmetic, ASCII logic, parsing, and memory visualization**.
 
+
 ---
 
 ## ex00 — ft_strcpy
